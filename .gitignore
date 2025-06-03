@@ -1,3 +1,6 @@
 # Ignore data folder with images
 data/ 
-results/*.h5
+results/
+report/
+# python cache files
+models/_pycache__/
