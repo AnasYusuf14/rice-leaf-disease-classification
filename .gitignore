@@ -1,2 +1,3 @@
 # Ignore data folder with images
 data/ 
+results/*.h5
