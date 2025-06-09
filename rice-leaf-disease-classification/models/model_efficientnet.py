@@ -6,7 +6,6 @@ from tensorflow.keras.optimizers import Adam
 def build_efficientnet_model(input_shape=(224, 224, 3), num_classes=4):
     base_model = EfficientNetB0(weights='imagenet', include_top=False, input_shape=input_shape)
 
-    # 🧠 تجميد الطبقات الأولى فقط، وفتح آخر 30 طبقة للتعلم
     for layer in base_model.layers[:-30]:
         layer.trainable = False
     for layer in base_model.layers[-30:]:
