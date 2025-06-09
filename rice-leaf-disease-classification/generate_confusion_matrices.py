@@ -3,17 +3,18 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from sklearn.metrics import confusion_matrix
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import os
 
-# Paths to trained models
+# Use relative paths for portability
 model_paths = {
-    "Xception": "C:/Users/wwwan/OneDrive/Desktop/rice_leaf_project/rice-leaf-disease-classification/results/xception_model.h5",
-    "VGG16": "C:/Users/wwwan/OneDrive/Desktop/rice_leaf_project/rice-leaf-disease-classification/results/vgg16_model.h5",
-    "MobileNet": "C:/Users/wwwan/OneDrive/Desktop/rice_leaf_project/rice-leaf-disease-classification/results/mobilenet_model.h5",
-    "EfficientNetB0": "C:/Users/wwwan/OneDrive/Desktop/rice_leaf_project/rice-leaf-disease-classification/results/efficientnet_model.h5"
+    "Xception": "results/xception_model.h5",
+    "VGG16": "results/vgg16_model.h5",
+    "MobileNet": "results/mobilenet_model.h5",
+    "EfficientNetB0": "results/efficientnet_model.h5"
 }
 
-# Dataset settings
-data_dir = "C:/Users/wwwan/OneDrive/Desktop/rice_leaf_project/rice-leaf-disease-classification/data"
+# Dataset settings (relative path)
+data_dir = "data"
 img_size = (224, 224)
 batch_size = 32
 class_labels = ["Bacterialblight", "Blast", "Brownspot", "Tungro"]
@@ -42,10 +43,9 @@ for model_name, model_path in model_paths.items():
     cm = confusion_matrix(true_classes, predicted_classes)
     results[model_name] = cm.tolist()
 
-import os
-os.makedirs("results", exist_ok=True)  # Add this before opening the file
-
-with open("C:/Users/wwwan/OneDrive/Desktop/rice_leaf_project/rice-leaf-disease-classification/results/confusion_matrices.json", "w") as f:
+# Ensure results directory exists and save the confusion matrices
+os.makedirs("results", exist_ok=True)
+with open("results/confusion_matrices.json", "w") as f:
     json.dump(results, f, indent=2)
 
 print("✅ confusion_matrices.json created successfully.")
